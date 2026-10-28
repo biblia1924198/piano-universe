@@ -1,0 +1,1 @@
+package android.media;public class AudioFormat{public static class Builder{public Builder setSampleRate(int n){return this;}public Builder setChannelMask(int n){return this;}public Builder setEncoding(int n){return this;}public AudioFormat build(){return new AudioFormat();}}}

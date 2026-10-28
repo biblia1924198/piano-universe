@@ -1,0 +1,18 @@
+package com.luci.pianoroom;
+import android.graphics.SurfaceTexture;import android.hardware.camera2.*;import android.hardware.camera2.params.StreamConfigurationMap;import android.media.*;import android.util.*;import java.util.*;
+/** Normal capture sessions only: constrained high-speed modes need a separate pipeline. */
+public final class CameraVideoModes {
+ public static final class Mode {
+  public final Size video,preview;public final int fps,bitrate;public final Range<Integer> ae;
+  Mode(Size v,Size p,int f,int b,Range<Integer> a){video=v;preview=p;fps=f;bitrate=b;ae=a;}
+  public String key(){return video.getWidth()+"x"+video.getHeight()+"@"+fps;}
+  public String label(){return VideoModePolicy.label(video.getWidth(),video.getHeight(),fps,ae.getLower()==ae.getUpper());}
+ }
+ public static List<Mode> read(CameraCharacteristics c){
+  StreamConfigurationMap map=c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);Range<Integer>[] ranges=c.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES);if(map==null||ranges==null)return Collections.emptyList();Size[] videos=map.getOutputSizes(MediaRecorder.class),previews=map.getOutputSizes(SurfaceTexture.class);if(videos==null||previews==null)return Collections.emptyList();ArrayList<MediaCodecInfo.VideoCapabilities> codecs=new ArrayList<>();for(MediaCodecInfo codec:new MediaCodecList(MediaCodecList.REGULAR_CODECS).getCodecInfos())if(codec.isEncoder())try{MediaCodecInfo.CodecCapabilities cap=codec.getCapabilitiesForType(MediaFormat.MIMETYPE_VIDEO_AVC);boolean surface=false;for(int f:cap.colorFormats)if(f==MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)surface=true;if(surface)codecs.add(cap.getVideoCapabilities());}catch(IllegalArgumentException ignored){}
+  ArrayList<Mode> modes=new ArrayList<>();for(Size video:videos){if(video.getWidth()>4096||video.getHeight()>2160||video.getWidth()<320||video.getHeight()<240)continue;Size preview=null;double aspect=video.getWidth()/(double)video.getHeight();for(Size p:previews)if(p.getWidth()<=1280&&p.getHeight()<=720&&Math.abs(p.getWidth()/(double)p.getHeight()-aspect)<.015&&(preview==null||p.getWidth()*p.getHeight()>preview.getWidth()*preview.getHeight()))preview=p;if(preview==null)for(Size p:previews)if(p.getWidth()<=1920&&p.getHeight()<=1080&&Math.abs(p.getWidth()/(double)p.getHeight()-aspect)<.015&&(preview==null||p.getWidth()*p.getHeight()>preview.getWidth()*preview.getHeight()))preview=p;if(preview==null)continue;
+   long vd=map.getOutputMinFrameDuration(MediaRecorder.class,video),pd=map.getOutputMinFrameDuration(SurfaceTexture.class,preview);for(int fps:new int[]{15,24,25,30,50,60}){Range<Integer> best=null;for(Range<Integer> range:ranges)if(VideoModePolicy.frameRate(fps,vd,pd,range.getLower(),range.getUpper())&&(best==null||range.getLower()>best.getLower()))best=range;if(best==null)continue;for(MediaCodecInfo.VideoCapabilities codec:codecs)try{if(codec.areSizeAndRateSupported(video.getWidth(),video.getHeight(),fps)){Range<Integer> bits=codec.getBitrateRange();modes.add(new Mode(video,preview,fps,VideoModePolicy.bitrate(video.getWidth(),video.getHeight(),fps,bits.getLower(),bits.getUpper()),best));break;}}catch(IllegalArgumentException ignored){}}
+  }Collections.sort(modes,Comparator.comparingLong((Mode m)->-(long)m.video.getWidth()*m.video.getHeight()).thenComparingInt(m->m.fps));return Collections.unmodifiableList(modes);
+ }
+ public static Mode choose(List<Mode> modes,String saved){for(Mode m:modes)if(m.key().equals(saved))return m;for(Mode m:modes)if(m.video.getWidth()==1920&&m.video.getHeight()==1080&&m.fps==30)return m;for(Mode m:modes)if(m.video.getWidth()<=1920&&m.video.getHeight()<=1080&&m.fps==30)return m;return modes.isEmpty()?null:modes.get(modes.size()-1);}
+}

@@ -1,0 +1,3 @@
+after_180s_idle: voices=0 last_block_peak=0 offline_cpu_ms=15702.701
+long_session: audio_seconds=248 channels=3 pedal_seconds=60 idle_seconds=180 notes=960 max_voices=800 invalid=0 soft=2240 hard=0 last_reentry_peak=0.075310 cpu_ms=42552.726
+PASS: offline sustain, silence, reentry; not Android lifecycle or physical phone validation.

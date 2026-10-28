@@ -1,0 +1,19 @@
+package com.luci.pianoroom;
+import java.io.*;import java.nio.*;import java.nio.file.*;import java.util.*;
+public final class PianoRealismTest {
+ static void check(boolean b,String s){if(!b)throw new AssertionError(s);}
+ public static void main(String[] args)throws Exception {
+  Scene scene=new Scene();ChannelSettings c=scene.effects[2];c.blend=4;c.blendCurve=1;c.contextual=true;c.bankProfile=true;c.hammer=5;c.keyNoise=3;c.pedalNoise=2;
+  Scene restored=Scene.decode(scene.encode());ChannelSettings x=restored.effects[2];check(x.blend==4&&x.blendCurve==1&&x.contextual&&x.bankProfile&&x.hammer==5&&x.keyNoise==3&&x.pedalNoise==2,"new controls persist per channel");
+  byte[] bytes=Base64.getDecoder().decode(scene.encode());bytes=Arrays.copyOf(bytes,bytes.length-296);bytes[3]=3;restored=Scene.decode(Base64.getEncoder().encodeToString(bytes));check(restored.effects[2].blend==0&&!restored.effects[2].contextual&&restored.effects[2].hammer==0,"v3 scenes retain neutral behavior");
+  c.blend=9;try{Scene.decode(scene.encode());throw new AssertionError("bad control");}catch(IOException expected){}
+  float[] profile=new float[264];for(int i=0;i<88;i++){profile[i]=(float)(440*Math.pow(2,(i+21-69)/12.0));profile[i+88]=2;profile[i+176]=.9f;}
+  check(PianoProfile.covered(PianoProfile.decode(PianoProfile.encode(profile)))==88,"profile roundtrip");profile[0]=Float.NaN;try{PianoProfile.encode(profile);throw new AssertionError("nonfinite profile");}catch(IOException expected){}check(PianoProfile.decode("corrupt")==null,"corrupt profile fallback");
+  File root=new File(args[0]);root.mkdirs();SfzBankTest.wave(new File(root,"sample.wav"),2,2000000);File sfz=new File(root,"piano.sfz"),bank=new File(root,"realism.prb");Files.write(sfz.toPath(),("<global> key=60\n<region> sample=sample.wav xfout_lovel=50 xfout_hivel=90 xf_velcurve=gain\n<region> sample=sample.wav xfin_lovel=50 xfin_hivel=90 xf_velcurve=power\n<region> sample=sample.wav trigger=release rt_decay=6\n").getBytes("UTF-8"));SfzBank.compile(sfz,root,bank,"Realism fixture");ByteBuffer data=ByteBuffer.wrap(Files.readAllBytes(bank.toPath())).order(ByteOrder.LITTLE_ENDIAN);check(data.getInt(0)==0x32425250&&data.getInt(4)==6,"PRB2 stereo regions");check(InstrumentIndex.read(bank,"Realism fixture",0).size()==1,"global catalog handles PRB2");
+  long handle=Synth.load(bank.getPath());check(handle!=0&&Synth.names(handle).length==1,"actual JNI loads enhanced import");Synth.freeBank(handle);
+  Files.write(sfz.toPath(),"<region> sample=sample.wav xfin_lovel=100 xfin_hivel=50".getBytes("UTF-8"));try{SfzBank.compile(sfz,root,bank,"Bad");throw new AssertionError("inverted fade");}catch(IOException expected){}
+  check(bank.exists()&&Arrays.equals(data.array(),Files.readAllBytes(bank.toPath())),"failed replacement preserves the existing valid bank");check(!new File(bank.getPath()+".partial").exists(),"no incomplete replacement remains");File rejected=new File(root,"rejected.prb");try{SfzBank.compile(sfz,root,rejected,"Bad new bank");throw new AssertionError("inverted fade accepted for new bank");}catch(IOException expected){}check(!rejected.exists()&&!new File(rejected.getPath()+".partial").exists(),"failed new import leaves no bank or partial");System.out.println("PASS: scene v4 realism controls/v3 migration, profile validation/persistence, SFZ crossfades/rt_decay, PRB2 actual JNI and catalog, atomic replacement preservation and bad fade cleanup.");
+  // Restore the valid fixture for the native duration/crossfade test.
+  Files.write(sfz.toPath(),("<global> key=60\n<region> sample=sample.wav xfout_lovel=50 xfout_hivel=90 xf_velcurve=gain\n<region> sample=sample.wav xfin_lovel=50 xfin_hivel=90 xf_velcurve=power\n<region> sample=sample.wav trigger=release rt_decay=6\n").getBytes("UTF-8"));SfzBank.compile(sfz,root,bank,"Realism fixture");
+ }
+}

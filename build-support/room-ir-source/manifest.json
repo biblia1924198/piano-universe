@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Estúdio íntimo",
+    "file": "Room6_Speak1_Mic1.wav",
+    "source_sha256": "2800b07b5c36fcc392af5f9a70a65be65a2699ceaff81c3e682c49feb74efb31",
+    "rate": 48000,
+    "direct_peak_frame": 48000,
+    "early_frames": 3840,
+    "predelay_frames": 384,
+    "removed_direct_ms": 2,
+    "normalization": "L2=0.28",
+    "format": "measured mono early IR + algorithmic stereo late tail"
+  },
+  {
+    "name": "Sala de concerto",
+    "file": "Room9_Speak1_Mic1.wav",
+    "source_sha256": "e075e25ece876fb371d4d0855d84529819117e3e854adbd04f27611a500e5b94",
+    "rate": 48000,
+    "direct_peak_frame": 48000,
+    "early_frames": 3840,
+    "predelay_frames": 384,
+    "removed_direct_ms": 2,
+    "normalization": "L2=0.28",
+    "format": "measured mono early IR + algorithmic stereo late tail"
+  },
+  {
+    "name": "Capela",
+    "file": "Room12_Speak1_Mic1.wav",
+    "source_sha256": "a998f1a38fcca79b85c067f50071217ab5ce594b0249e778d4a64e780bcb58e6",
+    "rate": 48000,
+    "direct_peak_frame": 48000,
+    "early_frames": 3840,
+    "predelay_frames": 384,
+    "removed_direct_ms": 2,
+    "normalization": "L2=0.28",
+    "format": "measured mono early IR + algorithmic stereo late tail"
+  }
+]

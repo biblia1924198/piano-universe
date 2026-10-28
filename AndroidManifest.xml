@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.luci.pianoroom" android:versionCode="30" android:versionName="0.27-preview1">
+<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/><uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/><uses-permission android:name="android.permission.WAKE_LOCK"/><uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+<uses-permission android:name="android.permission.RECORD_AUDIO"/><uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
+<uses-permission android:name="android.permission.CAMERA"/><uses-feature android:name="android.hardware.camera.any" android:required="false"/>
+<uses-feature android:glEsVersion="0x00020000" android:required="false"/>
+<uses-feature android:name="android.hardware.usb.host" android:required="false"/><uses-feature android:name="android.software.midi" android:required="false"/>
+<application android:label="Piano Universe" android:icon="@drawable/icon" android:theme="@style/RoomLight" android:allowBackup="false" android:extractNativeLibs="true" android:supportsRtl="true" android:usesCleartextTraffic="false">
+<service android:name=".PianoService" android:exported="false" android:foregroundServiceType="mediaPlayback|microphone"/>
+<activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+<intent-filter><action android:name="android.intent.action.SEND"/><action android:name="android.intent.action.SEND_MULTIPLE"/><category android:name="android.intent.category.DEFAULT"/><data android:mimeType="application/zip"/><data android:mimeType="application/x-zip-compressed"/><data android:mimeType="application/x-zip"/><data android:mimeType="application/octet-stream"/><data android:mimeType="application/x-soundfont"/></intent-filter>
+<intent-filter><action android:name="android.intent.action.VIEW"/><category android:name="android.intent.category.DEFAULT"/><category android:name="android.intent.category.BROWSABLE"/><data android:scheme="content"/><data android:mimeType="application/zip"/><data android:mimeType="application/x-zip-compressed"/><data android:mimeType="application/x-zip"/><data android:mimeType="application/octet-stream"/><data android:mimeType="application/x-soundfont"/></intent-filter>
+</activity>
+<activity android:name=".CameraActivity" android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize" android:resizeableActivity="true" android:theme="@style/RoomCamera" android:exported="false"/><activity android:name=".VideoPlaybackActivity" android:theme="@style/RoomCamera" android:exported="false"/>
+</application></manifest>

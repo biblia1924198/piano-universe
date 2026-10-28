@@ -1,0 +1,225 @@
+--- TinySoundFont-original/tsf.h
++++ Piano-Room-0.8/tsf.h
+@@ -332,6 +332,9 @@
+ 	struct tsf_preset* presets;
+ 	float* fontSamples;
+ 	struct tsf_voice* voices;
++#ifdef TSF_SAMPLE_INTERPOLATE
++ unsigned int sampleCount;int sampleQuality;
++#endif
+ 	struct tsf_channels* channels;
+ 
+ 	int presetNum;
+@@ -343,6 +346,9 @@
+ 	float outSampleRate;
+ 	float globalGainDB;
+ 	int* refCount;
++#ifdef TSF_PR_BANK
++ int prBank,prTrigger;unsigned*prSeqCounters;unsigned char prVelocity[128],prRelease[128];
++#endif
+ };
+ 
+ #ifndef TSF_NO_STDIO
+@@ -426,6 +432,9 @@
+ struct tsf_region
+ {
+ 	int loop_mode;
++#ifdef TSF_PR_BANK
++ int prSeq,prPosition,prTrigger,prOneShot;
++#endif
+ 	unsigned int sample_rate;
+ 	unsigned char lokey, hikey, lovel, hivel;
+ 	unsigned int group, offset, end, loop_start, loop_end;
+@@ -451,6 +460,9 @@
+ struct tsf_voice
+ {
+ 	int playingPreset, playingKey, playingChannel, heldSustain;
++#ifdef TSF_SAMPLE_INTERPOLATE
++ int sampleQuality,qualityLooped;
++#endif
+ 	struct tsf_region* region;
+ 	double pitchInputTimecents, pitchOutputFactor;
+ 	double sourceSamplePosition;
+@@ -624,7 +636,7 @@
+ 			case GEN_FLOAT:      ((       float*)region)[offset]  = amount->shortAmount;     return;
+ 			case GEN_INT:        ((         int*)region)[offset]  = amount->shortAmount;     return;
+ 			case GEN_UINT_ADD:   ((unsigned int*)region)[offset] += amount->shortAmount;     return;
+-			case GEN_UINT_ADD15: ((unsigned int*)region)[offset] += amount->shortAmount<<15; return;
++			case GEN_UINT_ADD15: ((unsigned int*)region)[offset] += (int)amount->shortAmount*32768; return;
+ 			case GEN_KEYRANGE:   region->lokey = amount->range.lo; region->hikey = amount->range.hi; return;
+ 			case GEN_VELRANGE:   region->lovel = amount->range.lo; region->hivel = amount->range.hi; return;
+ 			case GEN_LOOPMODE:   region->loop_mode       = ((amount->wordAmount&3) == 3 ? TSF_LOOPMODE_SUSTAIN : ((amount->wordAmount&3) == 1 ? TSF_LOOPMODE_CONTINUOUS : TSF_LOOPMODE_NONE)); return;
+@@ -1217,6 +1229,10 @@
+ 	v->pitchOutputFactor = v->region->sample_rate / (tsf_timecents2Secsd(v->region->pitch_keycenter * 100.0) * outSampleRate);
+ }
+ 
++/* Piano Room0.7 optional sample interpolation extension (MIT). */
++#ifdef TSF_SAMPLE_INTERPOLATE
++#include "sample_quality.h"
++#endif
+ static void tsf_voice_render(tsf* f, struct tsf_voice* v, float* outputBuffer, int numSamples)
+ {
+ 	struct tsf_region* region = v->region;
+@@ -1292,7 +1308,12 @@
+ 					unsigned int pos = (unsigned int)tmpSourceSamplePosition, nextPos = (pos >= tmpLoopEnd && isLooping ? tmpLoopStart : pos + 1);
+ 
+ 					// Simple linear interpolation.
+-					float alpha = (float)(tmpSourceSamplePosition - pos), val = (input[pos] * (1.0f - alpha) + input[nextPos] * alpha);
++					float alpha = (float)(tmpSourceSamplePosition - pos);
++#ifdef TSF_SAMPLE_INTERPOLATE
++                    float val = TSF_SAMPLE_INTERPOLATE(f,v,pos,nextPos,alpha);
++#else
++                    float val = (input[pos] * (1.0f - alpha) + input[nextPos] * alpha);
++#endif
+ 
+ 					// Low-pass filter.
+ 					if (tmpLowpass.active) val = tsf_voice_lowpass_process(&tmpLowpass, val);
+@@ -1302,7 +1323,12 @@
+ 
+ 					// Next sample.
+ 					tmpSourceSamplePosition += pitchRatio;
+-					if (tmpSourceSamplePosition >= tmpLoopEndDbl && isLooping) tmpSourceSamplePosition -= (tmpLoopEnd - tmpLoopStart + 1.0);
++					if (tmpSourceSamplePosition >= tmpLoopEndDbl && isLooping) {
++                        tmpSourceSamplePosition -= (tmpLoopEnd - tmpLoopStart + 1.0);
++#ifdef TSF_SAMPLE_INTERPOLATE
++                        v->qualityLooped=1;
++#endif
++                    }
+ 				}
+ 				break;
+ 
+@@ -1313,7 +1339,12 @@
+ 					unsigned int pos = (unsigned int)tmpSourceSamplePosition, nextPos = (pos >= tmpLoopEnd && isLooping ? tmpLoopStart : pos + 1);
+ 
+ 					// Simple linear interpolation.
+-					float alpha = (float)(tmpSourceSamplePosition - pos), val = (input[pos] * (1.0f - alpha) + input[nextPos] * alpha);
++					float alpha = (float)(tmpSourceSamplePosition - pos);
++#ifdef TSF_SAMPLE_INTERPOLATE
++                    float val = TSF_SAMPLE_INTERPOLATE(f,v,pos,nextPos,alpha);
++#else
++                    float val = (input[pos] * (1.0f - alpha) + input[nextPos] * alpha);
++#endif
+ 
+ 					// Low-pass filter.
+ 					if (tmpLowpass.active) val = tsf_voice_lowpass_process(&tmpLowpass, val);
+@@ -1323,7 +1354,12 @@
+ 
+ 					// Next sample.
+ 					tmpSourceSamplePosition += pitchRatio;
+-					if (tmpSourceSamplePosition >= tmpLoopEndDbl && isLooping) tmpSourceSamplePosition -= (tmpLoopEnd - tmpLoopStart + 1.0);
++					if (tmpSourceSamplePosition >= tmpLoopEndDbl && isLooping) {
++                        tmpSourceSamplePosition -= (tmpLoopEnd - tmpLoopStart + 1.0);
++#ifdef TSF_SAMPLE_INTERPOLATE
++                        v->qualityLooped=1;
++#endif
++                    }
+ 				}
+ 				break;
+ 
+@@ -1333,7 +1369,12 @@
+ 					unsigned int pos = (unsigned int)tmpSourceSamplePosition, nextPos = (pos >= tmpLoopEnd && isLooping ? tmpLoopStart : pos + 1);
+ 
+ 					// Simple linear interpolation.
+-					float alpha = (float)(tmpSourceSamplePosition - pos), val = (input[pos] * (1.0f - alpha) + input[nextPos] * alpha);
++					float alpha = (float)(tmpSourceSamplePosition - pos);
++#ifdef TSF_SAMPLE_INTERPOLATE
++                    float val = TSF_SAMPLE_INTERPOLATE(f,v,pos,nextPos,alpha);
++#else
++                    float val = (input[pos] * (1.0f - alpha) + input[nextPos] * alpha);
++#endif
+ 
+ 					// Low-pass filter.
+ 					if (tmpLowpass.active) val = tsf_voice_lowpass_process(&tmpLowpass, val);
+@@ -1342,7 +1383,12 @@
+ 
+ 					// Next sample.
+ 					tmpSourceSamplePosition += pitchRatio;
+-					if (tmpSourceSamplePosition >= tmpLoopEndDbl && isLooping) tmpSourceSamplePosition -= (tmpLoopEnd - tmpLoopStart + 1.0);
++					if (tmpSourceSamplePosition >= tmpLoopEndDbl && isLooping) {
++                        tmpSourceSamplePosition -= (tmpLoopEnd - tmpLoopStart + 1.0);
++#ifdef TSF_SAMPLE_INTERPOLATE
++                        v->qualityLooped=1;
++#endif
++                    }
+ 				}
+ 				break;
+ 		}
+@@ -1439,6 +1485,9 @@
+ 		if (!res || !tsf_load_presets(res, &hydra, smplCount)) goto out_of_memory;
+ 		res->outSampleRate = 44100.0f;
+ 		res->fontSamples = floatBuffer;
++#ifdef TSF_SAMPLE_INTERPOLATE
++        res->sampleCount=smplCount;
++#endif
+ 		floatBuffer = TSF_NULL; // don't free below
+ 	}
+ 	if (0)
+@@ -1469,16 +1518,22 @@
+ 	if (!res) return TSF_NULL;
+ 	TSF_MEMCPY(res, f, sizeof(tsf));
+ 	res->voices = TSF_NULL;
++#ifdef TSF_PR_BANK
++ res->prSeqCounters=TSF_NULL;if(f->prBank){unsigned n=f->presets[0].regionNum;res->prSeqCounters=(unsigned*)TSF_MALLOC(n*sizeof(unsigned));if(!res->prSeqCounters){TSF_FREE(res);return TSF_NULL;}TSF_MEMSET(res->prSeqCounters,0,n*sizeof(unsigned));}TSF_MEMSET(res->prVelocity,0,sizeof(res->prVelocity));TSF_MEMSET(res->prRelease,0,sizeof(res->prRelease));res->prTrigger=0;
++#endif
+ 	res->voiceNum = 0;
+ 	res->channels = TSF_NULL;
+-	(*res->refCount)++;
++	__atomic_add_fetch(res->refCount,1,__ATOMIC_RELAXED);
+ 	return res;
+ }
+ 
+ TSFDEF void tsf_close(tsf* f)
+ {
+ 	if (!f) return;
+-	if (!f->refCount || !--(*f->refCount))
++#ifdef TSF_PR_BANK
++ TSF_FREE(f->prSeqCounters);
++#endif
++	if (!f->refCount || !__atomic_sub_fetch(f->refCount,1,__ATOMIC_ACQ_REL))
+ 	{
+ 		struct tsf_preset *preset = f->presets, *presetEnd = preset + f->presetNum;
+ 		for (; preset != presetEnd; preset++) TSF_FREE(preset->regions);
+@@ -1565,6 +1620,9 @@
+ 	{
+ 		struct tsf_voice *voice, *v, *vEnd; TSF_BOOL doLoop; float lowpassFilterQDB, lowpassFc;
+ 		if (key < region->lokey || key > region->hikey || midiVelocity < region->lovel || midiVelocity > region->hivel) continue;
++#ifdef TSF_PR_BANK
++  if(f->prBank){if(region->prTrigger!=f->prTrigger)continue;unsigned seq=f->prSeqCounters[region-f->presets[preset_index].regions]++;if(region->prSeq>1&&seq%region->prSeq!=region->prPosition-1)continue;}
++#endif
+ 
+ 		voice = TSF_NULL, v = f->voices, vEnd = v + f->voiceNum;
+ 		if (region->group)
+@@ -1612,6 +1670,9 @@
+ 		}
+ 
+ 		voice->region = region;
++#ifdef TSF_SAMPLE_INTERPOLATE
++        voice->sampleQuality=f->sampleQuality;voice->qualityLooped=0;
++#endif
+ 		voice->playingPreset = preset_index;
+ 		voice->playingKey = key;
+ 		voice->playIndex = voicePlayIndex;
+@@ -1654,7 +1715,10 @@
+ 		tsf_voice_lfo_setup(&voice->modlfo, region->delayModLFO, region->freqModLFO, f->outSampleRate);
+ 		tsf_voice_lfo_setup(&voice->viblfo, region->delayVibLFO, region->freqVibLFO, f->outSampleRate);
+ 	}
+-	return 1;
++	#ifdef TSF_PR_BANK
++ if(f->prBank&&!f->prTrigger){f->prVelocity[key]=midiVelocity;}
++#endif
++ return 1;
+ }
+ 
+ TSFDEF int tsf_bank_note_on(tsf* f, int bank, int preset_number, int key, float vel)
+@@ -1946,7 +2010,10 @@
+ 	struct tsf_voice *v = f->voices, *vEnd = v + f->voiceNum, *vMatchFirst = TSF_NULL, *vMatchLast = TSF_NULL;
+ 	for (; v != vEnd; v++)
+ 	{
+-		//Find the first and last entry in the voices list with matching channel, key and look up the smallest play index
++		#ifdef TSF_PR_BANK
++  if(f->prBank&&(v->playingPreset>=0&&v->region)&&(v->region->prTrigger||v->region->prOneShot))continue;
++#endif
++  //Find the first and last entry in the voices list with matching channel, key and look up the smallest play index
+ 		if (v->playingPreset == -1 || v->playingChannel != channel || v->playingKey != key || v->ampenv.segment >= TSF_SEGMENT_RELEASE || v->heldSustain) continue;
+ 		else if (!vMatchFirst || v->playIndex < vMatchFirst->playIndex) vMatchFirst = vMatchLast = v;
+ 		else if (v->playIndex == vMatchFirst->playIndex) vMatchLast = v;

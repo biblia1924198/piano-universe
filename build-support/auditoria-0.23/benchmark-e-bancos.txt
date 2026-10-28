@@ -1,0 +1,4 @@
+PASS DiagnosticBenchmarkTest: oito etapas, equilíbrio MIDI/pedal, pausa/retomada, fallback, reset, lacunas, cancelamento, sem rajada de recuperação.
+PASS BenchmarkTest: protocolo rápido preservado.
+PASS BundledBanksTest: três bancos reais byte a byte, reparo de corrupção e preservação em falhas.
+JDK 17.0.20.1; execução local Windows.

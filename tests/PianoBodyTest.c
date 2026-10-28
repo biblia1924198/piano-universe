@@ -1,0 +1,12 @@
+#include <assert.h>
+#include <stdio.h>
+#include <time.h>
+#include "../native/piano_body.h"
+static double tail(int decay){PrPianoBody b;pr_body_init(&b,48000);pr_body_prepare(&b,1,100,100,50,decay,100,48000);float l,r;for(int n=0;n<48000;n++){l=r=0;pr_body_tick(&b,&l,&r);}double e=0;for(int n=0;n<24000;n++){l=r=n==0?1:0;pr_body_tick(&b,&l,&r);if(n>4800)e+=l*l+r*r;}return e;}
+static double sine(int lid,int hz){PrPianoBody b;pr_body_init(&b,48000);pr_body_prepare(&b,1,0,0,50,50,lid,48000);double e=0;for(int n=0;n<96000;n++){float l=.2f*sinf(6.283185307f*hz*n/48000),r=l;pr_body_tick(&b,&l,&r);if(n>=48000)e+=l*l;}return e;}
+int main(void){
+ for(int rate=8000;rate<=96000;rate=rate==8000?44100:rate==44100?48000:rate==48000?96000:96001){PrPianoBody b;pr_body_init(&b,rate);for(int n=0;n<rate;n++){float l=.34f*sinf(n*.36f),r=-.19f*cosf(n*.2f),x=l,y=r;pr_body_tick(&b,&l,&r);assert(l==x&&r==y);}pr_body_prepare(&b,1,100,100,0,0,0,rate);for(int n=0;n<rate*2;n++){if(n%128==0)pr_body_prepare(&b,1,100,100,n%101,(n/128)%101,n%101,rate);float l=n%23==0?5:.8f*sinf(n*.06f),r=l;pr_body_tick(&b,&l,&r);assert(isfinite(l)&&isfinite(r)&&fabsf(l)<10&&fabsf(r)<10);}pr_body_prepare(&b,0,100,100,50,50,0,rate);for(int n=0;n<rate;n++){float l=0,r=0;pr_body_tick(&b,&l,&r);}if(b.active||b.lidNow!=1||b.bodyNow!=0||b.boardNow!=0)fprintf(stderr,"rate %d active %d lid %.9f body %.9f board %.9f\n",rate,b.active,b.lidNow,b.bodyNow,b.boardNow);assert(!b.active&&b.lidNow==1&&b.bodyNow==0&&b.boardNow==0);float l=.37123f,r=-.16873f;pr_body_tick(&b,&l,&r);assert(l==.37123f&&r==-.16873f);pr_body_reset(&b);for(int i=0;i<16;i++)assert(b.x[i]==0&&b.y[i]==0);}
+ double longTail=tail(0),shortTail=tail(100);assert(longTail>shortTail*2&&longTail>0);double hi=sine(0,8000)/sine(100,8000),lo=sine(0,100)/sine(100,100);assert(hi<.3&&lo>.97);printf("PASS: exact neutral at 8/44.1/48/96 kHz, finite maximum automation, smooth disable to exact bypass, clear modes; damping tail ratio %.2f, lid high/low %.3f/%.3f.\n",longTail/shortTail,hi,lo);
+ // Benchmark added module only, four active channels, not device latency.
+ PrPianoBody parts[4];for(int i=0;i<4;i++){pr_body_init(parts+i,48000);pr_body_prepare(parts+i,1,100,100,50,50,70,48000);}clock_t start=clock();double sum=0;for(int n=0;n<48000*2;n++)for(int ch=0;ch<4;ch++){float l=.2f*sinf(n*.03f),r=l;pr_body_tick(parts+ch,&l,&r);sum+=l+r;}printf("HOST BENCH: four channels / 2 s audio: %.1f ms CPU; checksum %.3f (desktop CPU; not S23 guarantee).\n",1000.*(clock()-start)/CLOCKS_PER_SEC,sum);
+}

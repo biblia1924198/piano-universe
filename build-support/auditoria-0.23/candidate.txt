@@ -1,0 +1,8 @@
+silent_sustain: active=0 zero_envelope=0 after=3s
+silent_voices_10s_render_ms=0.295
+recycle: active=270 quick_fades=14 soft=52 hard=0
+release_burst: deferred=2816 triggered_in_single_event=2816 pedal_event_ms=0.985 callback_budget_192frames_ms=4.000
+contention: callback_frames=192 zero_frames=129 drops=1
+stolen_release: quick_frames_before=480 release_frames_after_pedal_up=480 prPedalRelease=0
+chorus_2kHz_reference: max_error=0.00085384 rms_error=0.00044152
+delayed_attack_guard=PASS

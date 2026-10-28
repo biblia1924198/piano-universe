@@ -1,0 +1,8 @@
+#include "../native/audio_api.h"
+#include <oboe/Oboe.h>
+#include <cassert>
+#include <cstdio>
+static int calls,errors,token,stopFlag;
+static int callback(AAudioStream*s,void*u,void*out,int n){assert(s&&u==&token&&out&&n==96);calls++;return stopFlag;}
+static void failure(AAudioStream*s,void*u,int code){assert(s&&u==&token&&code==-99);errors++;}
+int main(){PrApi a;assert(pr_oboe_api(&a));for(int cycle=0;cycle<100;cycle++){AAudioStreamBuilder*b=nullptr;AAudioStream*s=nullptr;assert(!a.create(&b));a.device(b,42);a.channels(b,2);a.format(b,2);a.sampleRate(b,48000);a.sharing(b,0);a.performance(b,12);a.data(b,callback,&token);a.error(b,failure,&token);oboe::failures=1;assert(a.open(b,&s)==-99&&!s);a.sharing(b,1);assert(!a.open(b,&s)&&s);a.destroy(b);auto audio=oboe::latest.lock();assert(audio);float out[192];stopFlag=0;assert(audio->data->onAudioReady(audio.get(),out,96)==oboe::DataCallbackResult::Continue);stopFlag=1;assert(audio->data->onAudioReady(audio.get(),out,96)==oboe::DataCallbackResult::Stop);assert(audio->error->onError(audio.get(),oboe::Result::Error));assert(a.rate(s)==48000&&a.id(s)==42&&a.ch(s)==2&&a.mode(s)==1&&a.perf(s)==12&&a.fmt(s)==2);assert(a.buffer(s,768)==768&&a.size(s)==768&&a.burst(s)==96&&a.xruns(s)==7);assert(a.readInput(s,out,96,0)==64);audio->readResult=-99;assert(a.readInput(s,out,96,0)==-99);assert(!a.start(s)&&!a.stop(s));audio.reset();assert(!a.close(s)&&oboe::latest.expired());}assert(calls==200&&errors==100&&oboe::closed==100);puts("PASS: Oboe adapter callback ownership after builder destruction, exclusive retry, control-owned error close, input reads/errors, format/rate/device/buffer mapping, 100 open/close cycles (mock API, not hardware).");}

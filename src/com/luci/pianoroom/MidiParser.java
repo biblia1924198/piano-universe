@@ -1,0 +1,6 @@
+package com.luci.pianoroom;
+public final class MidiParser{
+ public interface Sink{void message(int s,int a,int b);}public interface SysexSink{void message(byte[] data);}private final Sink sink;private final SysexSink exclusive;private final byte[] sx=new byte[4096];private int status,need,have,a,size;private boolean sysex,overflow;
+ public MidiParser(Sink s){this(s,null);}public MidiParser(Sink s,SysexSink x){sink=s;exclusive=x;}public synchronized void reset(){status=need=have=a=size=0;sysex=overflow=false;}
+ public synchronized void accept(byte[] data,int offset,int count){for(int i=offset;i<offset+count;i++){int v=data[i]&255;if(v>=0xF8)continue;if(v==0xF0){sysex=true;overflow=false;size=1;sx[0]=(byte)v;status=have=0;continue;}if(v==0xF7){if(sysex&&!overflow&&exclusive!=null){sx[size++]=(byte)v;exclusive.message(java.util.Arrays.copyOf(sx,size));}sysex=false;size=0;status=have=0;continue;}if(sysex&&(v&128)==0){if(size<sx.length-1)sx[size++]=(byte)v;else overflow=true;continue;}if(sysex){sysex=overflow=false;size=0;}if((v&128)!=0){have=0;if(v>=0xF0){status=0;continue;}status=v;need=((v&0xF0)==0xC0||(v&0xF0)==0xD0)?1:2;continue;}if(status==0)continue;if(have==0){a=v;have=1;if(need==1){sink.message(status,a,0);have=0;}}else{sink.message(status,a,v);have=0;}}}
+}

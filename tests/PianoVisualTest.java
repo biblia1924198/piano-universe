@@ -1,0 +1,25 @@
+package com.luci.pianoroom;
+import java.io.*;import java.util.*;
+public final class PianoVisualTest {
+ static void check(boolean b,String msg){if(!b)throw new AssertionError(msg);}
+ public static void main(String[] args)throws Exception{
+  Scene scene=new Scene();ChannelSettings c=scene.effects[1];c.bodyEnabled=true;c.bodyAmount=18;c.boardAmount=22;c.bodySize=61;c.boardDamping=42;c.lid=70;c.blend=4;c.hammer=5;
+  Scene read=Scene.decode(scene.encode());ChannelSettings copy=read.effects[1];check(copy.bodyEnabled&&copy.bodyAmount==18&&copy.boardAmount==22&&copy.bodySize==61&&copy.boardDamping==42&&copy.lid==70,"body scene roundtrip");check(!read.effects[0].bodyEnabled&&read.effects[0].lid==100,"channel isolation");byte[] raw=Base64.getDecoder().decode(scene.encode());byte[] old=Arrays.copyOf(raw,raw.length-208);old[3]=4;copy=Scene.decode(Base64.getEncoder().encodeToString(old)).effects[1];check(!copy.bodyEnabled&&copy.bodyAmount==0&&copy.boardAmount==0&&copy.lid==100&&copy.bodySize==50&&copy.boardDamping==50&&copy.blend==4&&copy.hammer==5,"v4 migration preserves realism and neutral body");c.bodyAmount=101;try{Scene.decode(scene.encode());throw new AssertionError("bad amount");}catch(IOException expected){}c.bodyAmount=18;c.lid=-1;try{Scene.decode(scene.encode());throw new AssertionError("bad lid");}catch(IOException expected){}
+  PianoMesh mesh=PianoMesh.read(new FileInputStream(args[0]));check(mesh.triangles>=3000&&mesh.triangles<=4096,"bounded real asset");boolean[] seen=new boolean[7];for(int i=9;i<mesh.vertices.length;i+=10)seen[(int)mesh.vertices[i]]=true;for(boolean b:seen)check(b,"all editable parts in mesh");check(mesh.pick(new PianoCamera.State(1.1f,.48f,6.8f,900,540,100,50,0,false),0,0)==-1,"empty area no selection");
+  // Camera target at centre, finite projection across orientation/zoom/lid changes.
+  for(int width:new int[]{400,900})for(int height:new int[]{280,600})for(int lid:new int[]{0,50,100}){PianoCamera.State state=new PianoCamera.State(1.1f,.48f,6.8f,width,height,lid,50,1,false);float[] pt=new float[3];check(PianoCamera.project(state,new float[]{-.8f,-.05f,0},0,0,pt),"target visible");check(Math.abs(pt[0]-width*.5f)<.01&&Math.abs(pt[1]-height*.5f)<.01,"camera target centred");check(PianoCamera.project(state,new float[]{-.7f,PianoCamera.HINGE_Y,PianoCamera.HINGE_Z},0,1,pt),"lid hinge fixed");float[] original=pt.clone();check(PianoCamera.project(state,new float[]{-.7f,PianoCamera.HINGE_Y,PianoCamera.HINGE_Z},0,0,pt)&&Math.abs(pt[0]-original[0])<.01&&Math.abs(pt[1]-original[1])<.01,"rigid hinge");for(float value:state.matrix)check(Float.isFinite(value),"finite camera");}
+  // Grab orbit: the surface nearest the viewer must follow the finger.
+  for(float yaw:new float[]{0,1.1f,2.8f,4.9f}){
+   float[] point={-.8f+(float)Math.sin(yaw)*.9f,-.05f,(float)Math.cos(yaw)*.9f},before=new float[3],after=new float[3];
+   PianoCamera.State a=new PianoCamera.State(yaw,.48f,6.8f,900,540,100,50,0,false);
+   PianoCamera.State b=new PianoCamera.State(PianoCamera.dragYaw(yaw,12),.48f,6.8f,900,540,100,50,0,false);
+   check(PianoCamera.project(a,point,0,0,before)&&PianoCamera.project(b,point,0,0,after),"drag point visible");check(after[0]>before[0],"right drag follows right finger at any yaw");
+   b=new PianoCamera.State(PianoCamera.dragYaw(yaw,-12),.48f,6.8f,900,540,100,50,0,false);check(PianoCamera.project(b,point,0,0,after)&&after[0]<before[0],"left drag follows finger");
+  }
+  check(PianoCamera.dragPitch(.48f,10000)==1.25f&&PianoCamera.dragPitch(.48f,-10000)==.12f,"vertical orbit bounded");
+  // Actual visible geometry can be selected, including the cutaway interior.
+  for(boolean inside:new boolean[]{false,true}){PianoCamera.State state=new PianoCamera.State(1.1f,.7f,6.8f,900,540,100,50,2,inside);Set<Integer> hits=new HashSet<>();for(int y=40;y<500;y+=10)for(int x=40;x<860;x+=10){int hit=mesh.pick(state,x,y);if(hit>=0)hits.add(hit);}check(hits.contains(4)&&hits.contains(5),"keys/pedals pickable");if(inside)check(hits.contains(2)&&hits.contains(3)&&!hits.contains(0)&&!hits.contains(1),"interior exposes board/strings without invisible hull selection");else check(hits.contains(0)&&hits.contains(1),"body/lid pickable");System.out.println("PICK "+inside+": "+hits);}
+  byte[] asset=java.nio.file.Files.readAllBytes(new File(args[0]).toPath());asset[4]=2;try{PianoMesh.read(new ByteArrayInputStream(asset));throw new AssertionError("bad mesh version");}catch(IOException expected){}System.out.println("PASS: v5 scene roundtrip/v4 neutral migration/invalid controls, "+mesh.triangles+" triangles and six pickable parts, portrait/landscape camera transforms and hinge, corrupt mesh rejected.");
+  if(args.length>1){try(PrintWriter out=new PrintWriter(args[1])){for(int lid:new int[]{0,70,100})for(boolean inside:new boolean[]{false,true}){PianoCamera.State s=new PianoCamera.State(1.1f,.48f,6.8f,900,540,lid,50,inside?2:1,inside);out.print(lid+" "+(inside?1:0)+" "+s.angle+" "+s.scale);for(float f:s.matrix)out.print(" "+f);out.println();}}}
+ }
+}

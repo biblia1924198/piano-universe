@@ -1,0 +1,6 @@
+#include <assert.h>
+#include <pthread.h>
+#include <stdio.h>
+#include "../native/engine.h"
+static void*producer(void*unused){short b[512];for(int i=0;i<256;i++){b[2*i]=1234;b[2*i+1]=-2345;}for(int n=0;n<50000;n++)retro_push(b,256,48000);return 0;}
+int main(){assert(retro_enable(1));short b[512],out[512];for(int i=0;i<256;i++){b[i*2]=1234;b[i*2+1]=-2345;}retro_push(b,256,48000);int epoch=retroEpoch;assert(retro_read(0,epoch,out,256)==256);for(int i=0;i<512;i++)assert(out[i]==b[i]);rec_start(48000);retro_push(b,256,48000);rec_push(b,256,48000);assert(rec_pull(out,256)==256);rec_stop();pthread_t thread;assert(!pthread_create(&thread,0,producer,0));int copies=0;for(int n=0;n<10000;n++){unsigned long long w=__atomic_load_n(&retroWrite,__ATOMIC_ACQUIRE);if(w>=256&&retro_read(w-256,epoch,out,256)==256){copies++;for(int i=0;i<256;i++)assert(out[i*2]==1234&&out[i*2+1]==-2345);}}pthread_join(thread,0);assert(copies>0);assert(retro_read(0,epoch,out,256)==-1);unsigned long long end=retroWrite;assert(retro_read(end-256,epoch,out,256)==256);retro_push(b,256,44100);assert(retroEpoch!=epoch&&retroWrite==256);assert(retro_read(0,epoch,out,256)==-1);retro_enable(0);assert(retroWrite==0);free(retroPcm);puts("Retrospective: concurrent snapshots, stereo, ring wrap, rate reset, independent recording passed");}

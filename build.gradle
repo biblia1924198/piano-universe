@@ -1,0 +1,13 @@
+plugins { id 'com.android.application' version '8.8.2' }
+android {
+ namespace 'com.luci.pianoroom'
+ compileSdk 35
+ ndkVersion '27.2.12479018'
+
+ defaultConfig { applicationId 'com.luci.pianoroom'; minSdk 26; targetSdk 35; versionCode 30; versionName '0.27-preview1'; externalNativeBuild { cmake { arguments '-DANDROID_STL=c++_static' } }; ndk { abiFilters 'arm64-v8a','x86_64' } }
+ sourceSets { main { manifest.srcFile 'AndroidManifest.xml'; java.srcDirs=['src']; res.srcDirs=['res']; assets.srcDirs=['assets'] } }
+ externalNativeBuild { cmake { path 'native/CMakeLists.txt'; version '3.22.1' } }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
+ androidResources { noCompress += ['prsf','prm','pr3d','mid'] }
+ packaging { jniLibs { useLegacyPackaging=true } }
+}

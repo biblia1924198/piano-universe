@@ -1,0 +1,21 @@
+[
+  {
+    "test": "InterpolationEquivalenceTest",
+    "output": "PASS: 28956456 interpolation comparisons bit-identical, including loops/bounds/linear/cubic.\n"
+  },
+  {
+    "test": "PerformanceSessionTest",
+    "output": "PASS: native deadline histogram, actual duration, 70% target, variable frames, ADPF creation/report/error/close lifecycle.\nLast complete callback reporting verified across multiple producer updates.\n"
+  },
+  {
+    "test": "WaveformOld",
+    "output": "waveform_render_ms=623.260\n"
+  },
+  {
+    "test": "WaveformNew",
+    "output": "waveform_render_ms=505.014\n"
+  },
+  {
+    "waveform": "bit-identical across 1,152,000 float samples with pedal, pitch, volume, expression and 3 presets"
+  }
+]

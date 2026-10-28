@@ -1,0 +1,4 @@
+Oboe 1.10.0 commit a81bb9f87d4105b84b682685d3bfbb5beca371d1
+NDK r27c; API 26; arm64-v8a and x86_64; C++17; c++_static; 16-KiB ELF alignment.
+Build with Gradle or build-support/build-apk.sh (SDK 35, CMake >=3.22.1, Ninja, JDK17).
+Original bank assets remain unchanged; prepare-bundled-banks.py creates .prsf assets if absent.

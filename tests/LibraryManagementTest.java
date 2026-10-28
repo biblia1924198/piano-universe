@@ -1,0 +1,11 @@
+package com.luci.pianoroom;
+import java.io.*;import java.util.*;
+public final class LibraryManagementTest {
+ private static void check(boolean ok,String message){if(!ok)throw new AssertionError(message);}
+ public static void main(String[] args)throws Exception {
+  check(LibraryEdits.name("  Piano de culto  ").equals("Piano de culto"),"trim and retain readable names");for(String bad:new String[]{""," ","Linha\nDois",String.join("",Collections.nCopies(101,"x"))})try{LibraryEdits.name(bad);throw new AssertionError("invalid name accepted");}catch(IOException expected){}
+  check(!LibraryEdits.deletable("GeneralUser-GS.sf2")&&!LibraryEdits.deletable("../import-1.sf2")&&LibraryEdits.deletable("FluidR3-GM.sf2")&&LibraryEdits.deletable("import-1.prb"),"default safety library and explicit paths");int[] map=LibraryEdits.mapping(7,new HashSet<>(Arrays.asList(1,3,5)));check(Arrays.equals(map,new int[]{0,-1,1,-1,2,-1,3}),"batch compaction");check(Arrays.equals(LibraryEdits.selections(new int[]{6,3,4,0},map,0),new int[]{3,0,2,0}),"unaffected selections remain attached to same bank");
+  List<InstrumentIndex.Entry> old=InstrumentIndex.read(new File(args[0]),"Original",3);List<InstrumentIndex.Entry> renamed=InstrumentIndex.read(new File(args[0]),"Culto",2);for(int i=0;i<old.size();i++){check(old.get(i).key.equals(renamed.get(i).key),"favorites identity survives name and source index changes");check(old.get(i).name.equals(renamed.get(i).name),"SF2 instrument names preserved");}List<InstrumentIndex.Entry> packed=InstrumentIndex.read(new File(args[1]),"Meu ambiente",5,"Warm Pad");check(packed.get(0).name.equals("Meu ambiente")&&packed.get(0).program==InstrumentCatalog.guessProgram("Warm Pad"),"rename packed library retains its original family");
+  for(int width:new int[]{360,600,840,960}){int channel=MixerLayout.channelWidth(width,5);if(width>=840)check(channel*5+42+5*6+4*6<=width,"all strips fit including dividers and margins");}check(MixerLayout.faderHeight(320)+128<=320&&MixerLayout.faderHeight(220)==120,"adaptive fader versus scroll fallback");System.out.println("PASS: batch library validation/reindexing, protected fallback, stable favorites and sample families after rename, landscape strip spacing.");
+ }
+}

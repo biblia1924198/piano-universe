@@ -1,0 +1,23 @@
+[
+  {
+    "file": "FluidR3-GM.sf2",
+    "originalBytes": 148398306,
+    "originalSha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "packedBytes": 74543299,
+    "packedSha256": "6465a50b6b3c49c6618473fc9c5d9cb4f999f4943a753fbd1cd8f35ba29fa98f"
+  },
+  {
+    "file": "GeneralUser-GS.sf2",
+    "originalBytes": 32319396,
+    "originalSha256": "9575028c7a1f589f5770fccc8cff2734566af40cd26ed836944e9a5152688cfe",
+    "packedBytes": 19596883,
+    "packedSha256": "d5d85fa1d57962088be06e3019cb73b4e70249569e85f43970324e88fa01f42f"
+  },
+  {
+    "file": "YDP-GrandPiano.sf2",
+    "originalBytes": 118398836,
+    "originalSha256": "8757076aecf80abdad1e8f8f6168370399b06f94481796986e6e75ceca09ad21",
+    "packedBytes": 26677018,
+    "packedSha256": "bc4636a76c28cc739367d79cb5ab6000515e8cf54c4823b5bd1482a4b2ad4ab8"
+  }
+]

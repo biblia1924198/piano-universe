@@ -1,0 +1,10 @@
+University of Rochester room impulse response dataset — CC BY 4.0
+Authors: Jenna M. Rutowski, Tre DiPassio, Benjamin R. Thompson, Michael C. Heilemann, Mark F. Bocko.
+Source: https://rochester.figshare.com/articles/dataset/26801089/3
+Metadata: https://api.figshare.com/v2/articles/26801089
+Download: https://ndownloader.figshare.com/files/48711175
+License: https://creativecommons.org/licenses/by/4.0/
+Dataset ZIP MD5: 73ecf3046b4e8dd1990c470824e9a831
+Selected mono 48kHz measured responses: Room6, Room9 and Room12, Speak1_Mic1.
+Adaptations: align direct peak; suppress first 2ms to remove direct sound; 1ms onset fade; 8ms wet predelay; retain first 80ms including predelay; remove DC; 5.33ms end fade; normalize impulse energy to 0.28; linearly resample to 44.1/96kHz. Exact coefficients included in native/room_ir.h, originals in build-support/room-ir-source.
+The early reflections are measured. The stereo late tail and shimmer are original synthesized DSP; this is not a complete convolution recreation of the original rooms. No endorsement by the original authors is implied.

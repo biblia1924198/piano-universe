@@ -1,0 +1,14 @@
+import com.luci.pianoroom.*;
+public final class SessionPolicyTest{
+ static void check(boolean ok,String why){if(!ok)throw new AssertionError(why);}
+ public static void main(String[] args){
+  TouchResponse linear=new TouchResponse(0,1,1,127,100);for(int v=0;v<=127;v++)check(linear.map(v)==v,"linear preserves velocity "+v);
+  for(int mode=0;mode<4;mode++){TouchResponse c=new TouchResponse(mode,.6f,1,127,100);check(c.map(0)==0&&c.map(1)==1&&c.map(127)==127,"note-off and endpoints");for(int v=2;v<=127;v++)check(c.map(v)>=c.map(v-1),"monotone touch response");}
+  check(new TouchResponse(1,1,1,127,100).map(50)>50,"soft response");check(new TouchResponse(2,1,1,127,100).map(50)<50,"hard response");TouchResponse fixed=new TouchResponse(4,1,1,127,77);check(fixed.map(0)==0&&fixed.map(1)==77&&fixed.map(127)==77,"fixed does not convert note off to note on");TouchResponse cal=new TouchResponse(0,1,20,110,100);check(cal.map(20)==1&&cal.map(110)==127,"measured input range");
+  ReconnectPolicy r=new ReconnectPolicy();check(r.begin()==-1,"disconnected initially");r.enable();int old=r.begin();check(old>=0&&r.begin()==-1,"only one outstanding open");r.lost();check(!r.current(old),"removed device invalidates late callback");int token=r.begin();check(!r.finish(old,true)&&r.current(token),"stale callback cannot accept another device");check(r.finish(token,true),"current open accepted");r.disable();check(r.begin()==-1&&!r.current(token),"manual disconnect prevents reconnect");r.enable();long delay=0;for(int i=0;i<20;i++){long next=r.nextDelay();check(next>=delay&&next<=30000,"bounded exponential retry");delay=next;}
+  LatencyTuner t=new LatencyTuner();t.start(32,0,1424,0);check(t.observe(0,1424,5999)==-1,"full observation window");check(t.observe(0,1424,6000)==28,"first reduction");check(t.observe(0,1248,12000)==24,"accept real reduction");check(t.observe(1,1072,13000)==32&&!t.active,"failure restores last stable plus margin");t.start(32,4,1424,0);t.observe(4,1424,6000);check(t.observe(4,1424,12000)==32&&!t.active,"route refusing smaller buffer stops test");t.start(12,0,544,0);check(t.observe(0,544,6000)==8,"minimum candidate");check(t.observe(0,368,12000)==8&&!t.active,"minimum validated");t.start(16,2,720,0);t.cancel();check(!t.active&&t.observe(5,720,10000)==-1,"cancel has no further effects");
+  t.step=5;t.start(35,0,1680,0);check(t.observe(0,1680,6000)==30,"native burst-aware step");
+  t.minimum=2;t.step=2;t.start(8,0,384,0);check(t.observe(0,384,6000)==6,"native 6ms candidate");check(t.observe(0,288,12000)==4,"native 4ms candidate");check(t.observe(0,192,18000)==2,"native 2ms candidate");check(t.observe(0,96,24000)==2&&!t.active,"native floor validation");
+  System.out.println("PASS: 127 MIDI velocities, monotone curves, zero-velocity note off, measured range; reconnect generation, exclusive open, manual stop and bounded backoff; buffer tuning, refusal, underrun recovery and cancel.");
+ }
+}

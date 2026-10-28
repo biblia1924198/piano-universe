@@ -1,0 +1,9 @@
+name: Sugerir melhoria
+description: Conte o que ajudaria você a tocar
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Qual necessidade você quer resolver e como imagina a melhoria?
+    validations:
+      required: true

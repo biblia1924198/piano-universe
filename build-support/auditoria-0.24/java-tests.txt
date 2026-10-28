@@ -1,0 +1,4 @@
+PASS BenchmarkTest
+PASS DiagnosticBenchmarkTest
+PASS CapacityBenchmarkTest
+JDK 17.0.20.1; controlador em tempo simulado; Android/ADPF real não executado nestes testes.

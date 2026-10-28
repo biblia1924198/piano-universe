@@ -1,0 +1,10 @@
+[
+  {
+    "test": "AuditSustainTest",
+    "output": "silent_sustain: active=0 zero_envelope=0 after=3s\nsilent_voices_10s_render_ms=0.200\nrecycle: active=270 quick_fades=14 soft=52 hard=0\nrelease_burst: deferred=2816 triggered_in_single_event=2816 pedal_event_ms=0.893 callback_budget_192frames_ms=4.000\ncontention: callback_frames=192 zero_frames=129 drops=1\nstolen_release: quick_frames_before=480 release_frames_after_pedal_up=480 prPedalRelease=0\nchorus_2kHz_reference: max_error=0.00085384 rms_error=0.00044152\ndelayed_attack_guard=PASS\n"
+  },
+  {
+    "test": "AuditLongSession",
+    "output": "after_180s_idle: voices=0 last_block_peak=0 offline_cpu_ms=15937.171\nlong_session: audio_seconds=248 channels=3 pedal_seconds=60 idle_seconds=180 notes=960 max_voices=776 invalid=0 soft=1970 hard=0 last_reentry_peak=0.075131 cpu_ms=40348.686\nPASS: offline sustain, silence, reentry; not Android lifecycle or physical phone validation.\n"
+  }
+]

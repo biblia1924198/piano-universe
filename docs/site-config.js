@@ -1,0 +1,1 @@
+window.PIANO_UNIVERSE={"repository": "biblia1924198/piano-universe", "releaseUrl": "https://github.com/biblia1924198/piano-universe/releases/download/v0.27-preview1/Piano-Universe-v0.27-preview1.apk", "pixKey": null, "pixPayload": null, "version": "0.27-preview1", "preview": false};

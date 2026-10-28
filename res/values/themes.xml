@@ -1,0 +1,20 @@
+<resources>
+ <style name="RoomLight" parent="android:style/Theme.Material.Light.NoActionBar">
+  <item name="android:fontFamily">sans</item>
+  <item name="android:colorAccent">#3F604B</item>
+  <item name="android:windowBackground">#F6F3ED</item>
+  <item name="android:colorBackground">#F6F3ED</item>
+  <item name="android:textColorPrimary">#242B27</item>
+  <item name="android:textColorSecondary">#637068</item>
+  <item name="android:windowLightStatusBar">true</item>
+  <item name="android:windowLightNavigationBar">true</item>
+  <item name="android:statusBarColor">#F6F3ED</item>
+  <item name="android:navigationBarColor">#F6F3ED</item>
+ </style>
+ <style name="RoomCamera" parent="android:style/Theme.Material.NoActionBar">
+  <item name="android:windowLightStatusBar">false</item>
+  <item name="android:windowLightNavigationBar">false</item>
+  <item name="android:statusBarColor">#0C141C</item>
+  <item name="android:navigationBarColor">#0C141C</item>
+ </style>
+</resources>

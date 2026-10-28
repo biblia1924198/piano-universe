@@ -1,0 +1,17 @@
+Piano 3D — attribution and adaptation
+
+Original: "Piano", Bruno Oliveira, May26,2017.
+Source: https://poly.pizza/m/5vbJ5vildOq
+Downloaded original GLB: https://static.poly.pizza/40a2ba70-c3c0-49f3-931a-539f021609bb.glb
+License: Creative Commons Attribution3.0 Unported (CC BY3.0)
+https://creativecommons.org/licenses/by/3.0/
+
+This app includes an adapted native mesh: colors adjusted, lid/support separated
+for movement, 88-key keyboard, individual strings, cast frame, tuning pins, soundboard ribs and pedal hardware added. The 0.17 native mesh has 3962 triangles (475452 bytes), no textures. Original author has
+not endorsed this app. The model depicts a stylized grand piano, not Yamaha P-145BT.
+
+License permits sharing/adaptation with attribution and indication of changes;
+no additional restrictions are imposed on this asset. This notice, source and
+license links must accompany redistributions of the mesh.
+
+Original GLB and deterministic preparation script are in the source project.

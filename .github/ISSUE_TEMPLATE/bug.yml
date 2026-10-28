@@ -1,0 +1,24 @@
+name: Relatar um problema
+description: Ajude a reproduzir um comportamento inesperado
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Celular, Android e versão do Piano Universe
+    validations:
+      required: true
+  - type: textarea
+    id: audio
+    attributes:
+      label: Motor, buffer, canais, bibliotecas e pedal
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Passos, resultado esperado e o que aconteceu
+    validations:
+      required: true
+  - type: textarea
+    id: benchmark
+    attributes:
+      label: Relatório do benchmark, se disponível
+      description: Remova dados pessoais. Não anexe bancos comerciais.

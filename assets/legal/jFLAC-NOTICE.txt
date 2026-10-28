@@ -1,0 +1,4 @@
+jFLAC 1.5.2 — org.jflac:jflac-codec
+https://github.com/nguillaumin/jflac
+Copyright Josh Coalson and jFLAC contributors; LGPL 2 or later / LGPL 2.1 distribution.
+Android adaptation removes only StreamInfo.getAudioFormat and the Java Sound SPI package. Full modified library source and application source/build instructions are provided with Piano-Room-Projeto.zip to allow modification and rebuilding. Decoder runs only while importing FLAC; never in the real-time audio callback.

@@ -1,0 +1,16 @@
+/.gradle/
+/build/
+/local.properties
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+.env
+.env.*
+__pycache__/
+*.pyc
+/assets/*.sf2
+/assets/*.prsf
+/docs/downloads/*
+!/docs/downloads/.gitkeep

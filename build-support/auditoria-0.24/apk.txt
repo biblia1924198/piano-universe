@@ -1,0 +1,61 @@
+Unsigned APK: 132145534 bytes
+
+
+
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=Piano Room Test
+Signer #1 certificate SHA-256 digest: 11e570f41d9bdd6dea4532e3adcae3520f2cb76b5bdc448f284cd5c496b06403
+Signer #1 certificate SHA-1 digest: e0f8845af86664d652b26a1823fc8501accdde6d
+Signer #1 certificate MD5 digest: 7c0b5f62ad46604ba9cf7d582c220126
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: ca7b760a7d7ede10fbffbbb34cf880e08f27658a298635bd1e5b2dc31e2eb1e6
+Signer #1 public key SHA-1 digest: c98ecee4af3e155a9cabcf02902575f062b1deed
+Signer #1 public key MD5 digest: 0c58d8748787cc44fccc28685da6c5a3
+
+
+PASS: Piano-Room-v0.24-desempenho1.apk: resource table STORED/aligned; local ZIP headers, CRC, DEX, native ELF16KiB
+
+package: name='com.luci.pianoroom' versionCode='27' versionName='0.24-desempenho1' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+sdkVersion:'26'
+targetSdkVersion:'35'
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK'
+uses-permission: name='android.permission.WAKE_LOCK'
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+uses-permission: name='android.permission.RECORD_AUDIO'
+uses-permission: name='android.permission.FOREGROUND_SERVICE_MICROPHONE'
+uses-permission: name='android.permission.CAMERA'
+application-label:'Piano Room'
+application-icon-160:'res/drawable/icon.xml'
+application-icon-65535:'res/drawable/icon.xml'
+application: label='Piano Room' icon='res/drawable/icon.xml'
+launchable-activity: name='com.luci.pianoroom.MainActivity'  label='' icon=''
+feature-group: label=''
+  uses-gl-es: '0x20000'
+  uses-feature-not-required: name='android.hardware.camera.any'
+  uses-feature-not-required: name='android.hardware.usb.host'
+  uses-feature-not-required: name='android.software.midi'
+  uses-feature: name='android.hardware.camera'
+  uses-implied-feature: name='android.hardware.camera' reason='requested android.permission.CAMERA permission'
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+  uses-feature: name='android.hardware.microphone'
+  uses-implied-feature: name='android.hardware.microphone' reason='requested android.permission.RECORD_AUDIO permission'
+main
+other-activities
+other-services
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--'
+densities: '160' '65535'
+native-code: 'arm64-v8a' 'x86_64'
+
+SHA256 8731df7bc6932bfbe6bb71637a04e5dad033b224b4259175ea51a4aeed0ba818

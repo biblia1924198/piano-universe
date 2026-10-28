@@ -1,0 +1,656 @@
+{
+  "recordings": 92,
+  "rate": 48000,
+  "channels": 2,
+  "format": "float32",
+  "frames": 1435906,
+  "bytes": 11488004,
+  "sha256": "4f834ddfb280837e0dcb95adcee07134f63faf1f4c46804604917246e5d64824",
+  "adaptation": "Quiet lead-in trimmed; DC removed; 1ms onset and <=20ms end fades; pedal clips bounded to 1s. No pitch shift, denoiser or synthetic layer.",
+  "samples": [
+    {
+      "file": "rel1.flac",
+      "source_frames": 21900,
+      "trim_begin": 3032,
+      "frames": 16224,
+      "peak": 0.5355597734451294
+    },
+    {
+      "file": "rel2.flac",
+      "source_frames": 21900,
+      "trim_begin": 705,
+      "frames": 15358,
+      "peak": 0.7387496829032898
+    },
+    {
+      "file": "rel3.flac",
+      "source_frames": 21901,
+      "trim_begin": 2892,
+      "frames": 14167,
+      "peak": 0.8280215263366699
+    },
+    {
+      "file": "rel4.flac",
+      "source_frames": 21900,
+      "trim_begin": 1855,
+      "frames": 15545,
+      "peak": 0.8513514995574951
+    },
+    {
+      "file": "rel5.flac",
+      "source_frames": 21901,
+      "trim_begin": 2503,
+      "frames": 15278,
+      "peak": 0.5499969124794006
+    },
+    {
+      "file": "rel6.flac",
+      "source_frames": 21900,
+      "trim_begin": 2015,
+      "frames": 14461,
+      "peak": 0.7390857934951782
+    },
+    {
+      "file": "rel7.flac",
+      "source_frames": 21900,
+      "trim_begin": 2950,
+      "frames": 14995,
+      "peak": 0.5270944237709045
+    },
+    {
+      "file": "rel8.flac",
+      "source_frames": 21901,
+      "trim_begin": 2875,
+      "frames": 15650,
+      "peak": 0.7612971663475037
+    },
+    {
+      "file": "rel9.flac",
+      "source_frames": 21900,
+      "trim_begin": 4208,
+      "frames": 14142,
+      "peak": 0.6570566296577454
+    },
+    {
+      "file": "rel10.flac",
+      "source_frames": 21901,
+      "trim_begin": 3042,
+      "frames": 14849,
+      "peak": 0.6913069486618042
+    },
+    {
+      "file": "rel11.flac",
+      "source_frames": 21900,
+      "trim_begin": 3267,
+      "frames": 14564,
+      "peak": 0.6119801998138428
+    },
+    {
+      "file": "rel12.flac",
+      "source_frames": 21900,
+      "trim_begin": 2013,
+      "frames": 16345,
+      "peak": 0.6436151266098022
+    },
+    {
+      "file": "rel13.flac",
+      "source_frames": 21901,
+      "trim_begin": 3370,
+      "frames": 15871,
+      "peak": 0.5258054733276367
+    },
+    {
+      "file": "rel14.flac",
+      "source_frames": 21900,
+      "trim_begin": 3068,
+      "frames": 15084,
+      "peak": 0.6319289207458496
+    },
+    {
+      "file": "rel15.flac",
+      "source_frames": 21900,
+      "trim_begin": 1508,
+      "frames": 15767,
+      "peak": 0.7469713687896729
+    },
+    {
+      "file": "rel16.flac",
+      "source_frames": 21901,
+      "trim_begin": 3163,
+      "frames": 14552,
+      "peak": 0.6702190637588501
+    },
+    {
+      "file": "rel17.flac",
+      "source_frames": 21900,
+      "trim_begin": 3577,
+      "frames": 14769,
+      "peak": 0.43745335936546326
+    },
+    {
+      "file": "rel18.flac",
+      "source_frames": 21901,
+      "trim_begin": 1268,
+      "frames": 15108,
+      "peak": 0.8627464771270752
+    },
+    {
+      "file": "rel19.flac",
+      "source_frames": 21900,
+      "trim_begin": 3281,
+      "frames": 16414,
+      "peak": 0.7332003712654114
+    },
+    {
+      "file": "rel20.flac",
+      "source_frames": 21900,
+      "trim_begin": 5002,
+      "frames": 13792,
+      "peak": 0.8765966892242432
+    },
+    {
+      "file": "rel21.flac",
+      "source_frames": 21901,
+      "trim_begin": 4065,
+      "frames": 15499,
+      "peak": 0.42840418219566345
+    },
+    {
+      "file": "rel22.flac",
+      "source_frames": 21900,
+      "trim_begin": 4290,
+      "frames": 13714,
+      "peak": 0.6909762024879456
+    },
+    {
+      "file": "rel23.flac",
+      "source_frames": 21901,
+      "trim_begin": 3159,
+      "frames": 17048,
+      "peak": 0.48922017216682434
+    },
+    {
+      "file": "rel24.flac",
+      "source_frames": 21900,
+      "trim_begin": 4278,
+      "frames": 14531,
+      "peak": 0.45690470933914185
+    },
+    {
+      "file": "rel25.flac",
+      "source_frames": 21900,
+      "trim_begin": 3153,
+      "frames": 15031,
+      "peak": 0.6210691928863525
+    },
+    {
+      "file": "rel26.flac",
+      "source_frames": 21901,
+      "trim_begin": 2052,
+      "frames": 15065,
+      "peak": 0.8789404034614563
+    },
+    {
+      "file": "rel27.flac",
+      "source_frames": 21900,
+      "trim_begin": 4826,
+      "frames": 15079,
+      "peak": 0.7166754007339478
+    },
+    {
+      "file": "rel28.flac",
+      "source_frames": 21901,
+      "trim_begin": 3546,
+      "frames": 15281,
+      "peak": 0.5986258387565613
+    },
+    {
+      "file": "rel29.flac",
+      "source_frames": 21900,
+      "trim_begin": 2856,
+      "frames": 13922,
+      "peak": 0.7963000535964966
+    },
+    {
+      "file": "rel30.flac",
+      "source_frames": 21900,
+      "trim_begin": 3957,
+      "frames": 12852,
+      "peak": 0.7731819748878479
+    },
+    {
+      "file": "rel31.flac",
+      "source_frames": 21901,
+      "trim_begin": 2927,
+      "frames": 15377,
+      "peak": 0.9370338320732117
+    },
+    {
+      "file": "rel32.flac",
+      "source_frames": 21900,
+      "trim_begin": 3060,
+      "frames": 15419,
+      "peak": 0.7142606377601624
+    },
+    {
+      "file": "rel33.flac",
+      "source_frames": 21900,
+      "trim_begin": 1392,
+      "frames": 16254,
+      "peak": 0.7824310660362244
+    },
+    {
+      "file": "rel34.flac",
+      "source_frames": 21901,
+      "trim_begin": 2367,
+      "frames": 15737,
+      "peak": 0.7253527045249939
+    },
+    {
+      "file": "rel35.flac",
+      "source_frames": 21900,
+      "trim_begin": 2656,
+      "frames": 12827,
+      "peak": 0.7555192112922668
+    },
+    {
+      "file": "rel36.flac",
+      "source_frames": 21901,
+      "trim_begin": 2912,
+      "frames": 14780,
+      "peak": 0.6199143528938293
+    },
+    {
+      "file": "rel37.flac",
+      "source_frames": 21900,
+      "trim_begin": 1468,
+      "frames": 14313,
+      "peak": 0.7755541205406189
+    },
+    {
+      "file": "rel38.flac",
+      "source_frames": 21900,
+      "trim_begin": 1351,
+      "frames": 13666,
+      "peak": 0.9415882229804993
+    },
+    {
+      "file": "rel39.flac",
+      "source_frames": 21901,
+      "trim_begin": 627,
+      "frames": 13965,
+      "peak": 0.7726972699165344
+    },
+    {
+      "file": "rel40.flac",
+      "source_frames": 21900,
+      "trim_begin": 2123,
+      "frames": 15856,
+      "peak": 0.757874071598053
+    },
+    {
+      "file": "rel41.flac",
+      "source_frames": 21901,
+      "trim_begin": 793,
+      "frames": 13862,
+      "peak": 0.8634197115898132
+    },
+    {
+      "file": "rel42.flac",
+      "source_frames": 21900,
+      "trim_begin": 1953,
+      "frames": 13939,
+      "peak": 0.8941720724105835
+    },
+    {
+      "file": "rel43.flac",
+      "source_frames": 21900,
+      "trim_begin": 2763,
+      "frames": 13524,
+      "peak": 0.9826191067695618
+    },
+    {
+      "file": "rel44.flac",
+      "source_frames": 21901,
+      "trim_begin": 3525,
+      "frames": 14605,
+      "peak": 0.6973278522491455
+    },
+    {
+      "file": "rel45.flac",
+      "source_frames": 21900,
+      "trim_begin": 1339,
+      "frames": 14728,
+      "peak": 0.8712282776832581
+    },
+    {
+      "file": "rel46.flac",
+      "source_frames": 21901,
+      "trim_begin": 4706,
+      "frames": 13396,
+      "peak": 0.6162856221199036
+    },
+    {
+      "file": "rel47.flac",
+      "source_frames": 21900,
+      "trim_begin": 2875,
+      "frames": 14174,
+      "peak": 0.8320261836051941
+    },
+    {
+      "file": "rel48.flac",
+      "source_frames": 21900,
+      "trim_begin": 2561,
+      "frames": 14326,
+      "peak": 0.7603569626808167
+    },
+    {
+      "file": "rel49.flac",
+      "source_frames": 21901,
+      "trim_begin": 973,
+      "frames": 15313,
+      "peak": 0.999960720539093
+    },
+    {
+      "file": "rel50.flac",
+      "source_frames": 21900,
+      "trim_begin": 1378,
+      "frames": 16511,
+      "peak": 0.7542007565498352
+    },
+    {
+      "file": "rel51.flac",
+      "source_frames": 21900,
+      "trim_begin": 3452,
+      "frames": 13394,
+      "peak": 0.8730027675628662
+    },
+    {
+      "file": "rel52.flac",
+      "source_frames": 21901,
+      "trim_begin": 1249,
+      "frames": 14074,
+      "peak": 0.9640571475028992
+    },
+    {
+      "file": "rel53.flac",
+      "source_frames": 21900,
+      "trim_begin": 441,
+      "frames": 16464,
+      "peak": 0.8846173882484436
+    },
+    {
+      "file": "rel54.flac",
+      "source_frames": 21901,
+      "trim_begin": 2607,
+      "frames": 15742,
+      "peak": 0.7917354106903076
+    },
+    {
+      "file": "rel55.flac",
+      "source_frames": 21900,
+      "trim_begin": 2936,
+      "frames": 13090,
+      "peak": 0.7754912376403809
+    },
+    {
+      "file": "rel56.flac",
+      "source_frames": 21900,
+      "trim_begin": 1918,
+      "frames": 12744,
+      "peak": 0.9128717184066772
+    },
+    {
+      "file": "rel57.flac",
+      "source_frames": 21901,
+      "trim_begin": 811,
+      "frames": 12696,
+      "peak": 0.987875759601593
+    },
+    {
+      "file": "rel58.flac",
+      "source_frames": 21900,
+      "trim_begin": 4623,
+      "frames": 12963,
+      "peak": 0.7262105345726013
+    },
+    {
+      "file": "rel59.flac",
+      "source_frames": 21901,
+      "trim_begin": 3139,
+      "frames": 13692,
+      "peak": 0.6930305361747742
+    },
+    {
+      "file": "rel60.flac",
+      "source_frames": 21900,
+      "trim_begin": 930,
+      "frames": 15637,
+      "peak": 0.8430809378623962
+    },
+    {
+      "file": "rel61.flac",
+      "source_frames": 21900,
+      "trim_begin": 3943,
+      "frames": 13359,
+      "peak": 0.7650114297866821
+    },
+    {
+      "file": "rel62.flac",
+      "source_frames": 21901,
+      "trim_begin": 3583,
+      "frames": 13710,
+      "peak": 0.8431916236877441
+    },
+    {
+      "file": "rel63.flac",
+      "source_frames": 21900,
+      "trim_begin": 1570,
+      "frames": 12951,
+      "peak": 0.9468642473220825
+    },
+    {
+      "file": "rel64.flac",
+      "source_frames": 21901,
+      "trim_begin": 2921,
+      "frames": 13144,
+      "peak": 0.746893584728241
+    },
+    {
+      "file": "rel65.flac",
+      "source_frames": 21900,
+      "trim_begin": 3350,
+      "frames": 13373,
+      "peak": 0.7371989488601685
+    },
+    {
+      "file": "rel66.flac",
+      "source_frames": 21900,
+      "trim_begin": 946,
+      "frames": 14721,
+      "peak": 0.7737804651260376
+    },
+    {
+      "file": "rel67.flac",
+      "source_frames": 21901,
+      "trim_begin": 1794,
+      "frames": 13227,
+      "peak": 0.9415520429611206
+    },
+    {
+      "file": "rel68.flac",
+      "source_frames": 21900,
+      "trim_begin": 749,
+      "frames": 13200,
+      "peak": 0.8289228081703186
+    },
+    {
+      "file": "rel69.flac",
+      "source_frames": 21900,
+      "trim_begin": 869,
+      "frames": 13389,
+      "peak": 0.8109254837036133
+    },
+    {
+      "file": "rel70.flac",
+      "source_frames": 21901,
+      "trim_begin": 2644,
+      "frames": 13538,
+      "peak": 0.8360491394996643
+    },
+    {
+      "file": "rel71.flac",
+      "source_frames": 21900,
+      "trim_begin": 3063,
+      "frames": 12778,
+      "peak": 0.7796570062637329
+    },
+    {
+      "file": "rel72.flac",
+      "source_frames": 21901,
+      "trim_begin": 4537,
+      "frames": 12796,
+      "peak": 0.7402618527412415
+    },
+    {
+      "file": "rel73.flac",
+      "source_frames": 21900,
+      "trim_begin": 2138,
+      "frames": 15444,
+      "peak": 0.8030516505241394
+    },
+    {
+      "file": "rel74.flac",
+      "source_frames": 21900,
+      "trim_begin": 742,
+      "frames": 13224,
+      "peak": 0.9998713135719299
+    },
+    {
+      "file": "rel75.flac",
+      "source_frames": 21901,
+      "trim_begin": 3040,
+      "frames": 13315,
+      "peak": 0.7406427264213562
+    },
+    {
+      "file": "rel76.flac",
+      "source_frames": 19228,
+      "trim_begin": 1120,
+      "frames": 12892,
+      "peak": 0.7090155482292175
+    },
+    {
+      "file": "rel77.flac",
+      "source_frames": 21901,
+      "trim_begin": 594,
+      "frames": 16025,
+      "peak": 0.7574590444564819
+    },
+    {
+      "file": "rel78.flac",
+      "source_frames": 21900,
+      "trim_begin": 664,
+      "frames": 16933,
+      "peak": 0.8315973281860352
+    },
+    {
+      "file": "rel79.flac",
+      "source_frames": 21900,
+      "trim_begin": 2350,
+      "frames": 15234,
+      "peak": 0.9388342499732971
+    },
+    {
+      "file": "rel80.flac",
+      "source_frames": 21901,
+      "trim_begin": 400,
+      "frames": 15890,
+      "peak": 0.7712392210960388
+    },
+    {
+      "file": "rel81.flac",
+      "source_frames": 19689,
+      "trim_begin": 2969,
+      "frames": 13920,
+      "peak": 0.5176678895950317
+    },
+    {
+      "file": "rel82.flac",
+      "source_frames": 21901,
+      "trim_begin": 2673,
+      "frames": 17757,
+      "peak": 0.6467522382736206
+    },
+    {
+      "file": "rel83.flac",
+      "source_frames": 21900,
+      "trim_begin": 3392,
+      "frames": 17058,
+      "peak": 0.6475281715393066
+    },
+    {
+      "file": "rel84.flac",
+      "source_frames": 21900,
+      "trim_begin": 236,
+      "frames": 16225,
+      "peak": 0.9965869784355164
+    },
+    {
+      "file": "rel85.flac",
+      "source_frames": 21901,
+      "trim_begin": 1700,
+      "frames": 16839,
+      "peak": 0.7653223276138306
+    },
+    {
+      "file": "rel86.flac",
+      "source_frames": 21900,
+      "trim_begin": 462,
+      "frames": 17521,
+      "peak": 0.7962924242019653
+    },
+    {
+      "file": "rel87.flac",
+      "source_frames": 21901,
+      "trim_begin": 871,
+      "frames": 16264,
+      "peak": 0.9401270151138306
+    },
+    {
+      "file": "rel88.flac",
+      "source_frames": 21900,
+      "trim_begin": 7698,
+      "frames": 11795,
+      "peak": 0.6209215521812439
+    },
+    {
+      "file": "pedalD1.flac",
+      "source_frames": 306139,
+      "trim_begin": 457,
+      "frames": 48000,
+      "peak": 0.0869700089097023
+    },
+    {
+      "file": "pedalD2.flac",
+      "source_frames": 313892,
+      "trim_begin": 222,
+      "frames": 48000,
+      "peak": 0.04450804367661476
+    },
+    {
+      "file": "pedalU1.flac",
+      "source_frames": 33529,
+      "trim_begin": 132,
+      "frames": 25146,
+      "peak": 0.03649419918656349
+    },
+    {
+      "file": "pedalU2.flac",
+      "source_frames": 26798,
+      "trim_begin": 77,
+      "frames": 24213,
+      "peak": 0.018440131098031998
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "test": "SmartVoicesTest",
+    "args": [
+      "GeneralUser-GS.sf2"
+    ],
+    "status": "PASS",
+    "exit": 0,
+    "output": "PASS: 1200 pedal-held repeated notes, new notes always start, held key/stereo group protected; 1140 soft tail releases; dense 600-note burst recycles without omitted notes; pedal-up releases all.\nPASS: PCM tap wraps in order, bounded overflow and sample-rate changes stop capture safely.\n"
+  },
+  {
+    "test": "SmartVoicesTest",
+    "args": [
+      "FluidR3-GM.sf2"
+    ],
+    "status": "PASS",
+    "exit": 0,
+    "output": "PASS: 1200 pedal-held repeated notes, new notes always start, held key/stereo group protected; 1169 soft tail releases; dense 600-note burst recycles without omitted notes; pedal-up releases all.\nPASS: PCM tap wraps in order, bounded overflow and sample-rate changes stop capture safely.\n"
+  },
+  {
+    "test": "VoiceDeClickTest",
+    "args": [
+      "GeneralUser-GS.sf2"
+    ],
+    "status": "PASS",
+    "exit": 0,
+    "output": "PASS: capacity recycle continues last stereo sample without a step; bounded 2ms decay; silence, clone and reset clear residual; no extra voices/buffer.\n"
+  },
+  {
+    "test": "SoundQualityTest",
+    "args": [
+      "GeneralUser-GS.sf2"
+    ],
+    "status": "PASS",
+    "exit": 0,
+    "output": "Sine 0.02 cycles/sample: cubic/linear RMS ratio 0.0160\nSine 0.10 cycles/sample: cubic/linear RMS ratio 0.1028\nSine 0.20 cycles/sample: cubic/linear RMS ratio 0.2905\nPASS: EQ frequency response 44.1/48kHz, neutral/bypass, stereo isolation, finite transitions, latest request, panic/rate preservation.\nPreset Grand Piano: 30380â€“44100Hz, 200 regions, 8 velocity zones at C4\n240 sustain notes HQ+EQ: 0.697s audio in 0.037s host CPU; not a phone measurement\nPASS: interpolation accuracy, guarded samples/loops, new-note quality, HQ+EQ sustain and source metadata.\n"
+  },
+  {
+    "test": "SceneContinuityTest",
+    "args": [
+      "GeneralUser-GS.sf2"
+    ],
+    "status": "PASS",
+    "exit": 0,
+    "output": "Scene continuity: FIFO note-offs, old transpose, pedal/tails and finite channel DSP passed\n"
+  },
+  {
+    "test": "AudioProtectionTest",
+    "args": [],
+    "status": "PASS",
+    "exit": 0,
+    "output": "PASS: transparent normal PCM, stereo-linked overload protection, release, invalid samples, panic preservation and clean 440Hz stereo tone (880 crossings).\n"
+  },
+  {
+    "test": "PianoResonanceTest",
+    "args": [],
+    "status": "PASS",
+    "exit": 0,
+    "output": "rate=44100 tail energy closed 7.0429332e-11 half 6.718627e-06 open 0.0053813799 held 0.0028212642 damped 7.1963666e-11\nrate=48000 tail energy closed 7.0010811e-11 half 6.7066062e-06 open 0.0053604793 held 0.0028092372 damped 7.1541599e-11\nrate=96000 tail energy closed 6.9824577e-11 half 6.713669e-06 open 0.0053807637 held 0.0028235582 damped 7.1362108e-11\nPASS: resonant selectivity, damping/half pedal, transpose, rates, zero-wet bypass, finite hot-input stress; 0.939s host CPU / 60s audio, energy 4242.8 (not phone latency).\n"
+  },
+  {
+    "test": "HybridSpaceTest",
+    "args": [],
+    "status": "PASS",
+    "exit": 0,
+    "output": "shimmer power octave/base 4127623.0\none active channel DSP: 0.008 CPU seconds per audio second (host, not S23)\nPASS: measured IR exact partition timing, overlapping impulses, octave shimmer, bounded hot input, duck/recovery, tail decay, bypass/re-enable at 8/44.1/48/96k.\n"
+  },
+  {
+    "test": "HarmonicRepetitionTest",
+    "args": [],
+    "status": "PASS",
+    "exit": 0,
+    "output": "estimated 440.81 / 884.00 / 1328.00 Hz; amplitudes 0.32 / 0.14\nPASS: measured inharmonic partial estimates, corrupt/legacy fallbacks, repeat smoothing protects held keys and preserves sustain ownership.\n"
+  }
+]
