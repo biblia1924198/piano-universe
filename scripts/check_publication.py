@@ -1,5 +1,5 @@
 from pathlib import Path
-import json
+import json,uuid
 root=Path(__file__).resolve().parents[1]
 for p in root.rglob('*'):
  if not p.is_file() or any(x in p.parts for x in ['.git','.gradle','build']):continue
@@ -9,5 +9,5 @@ for p in root.rglob('*'):
 for name in ['README.md','LICENSE','CONTRIBUTING.md','THIRD_PARTY_NOTICES.md','PRIVACY.md','docs/index.html','docs/site.js']:
  assert (root/name).is_file(),name
 c=json.loads((root/'docs/site-config.json').read_text())
-assert not c.get('pixKey') or c.get('pixPayload'),'Pix necessita payload validado pelo mantenedor.'
+if c.get('pixKey'):assert str(uuid.UUID(c['pixKey']))==c['pixKey'],'Chave Pix aleatoria invalida.'
 print('Fontes sem chaves de assinatura; documentos e site presentes.')

@@ -28,7 +28,7 @@ Os bancos grandes ficam como anexo da versão, fora do histórico Git. O pacote 
 Leia [CONTRIBUTING.md](CONTRIBUTING.md). Sugestões e dúvidas vão para Discussions; defeitos reproduzíveis para Issues; mudanças de código chegam por pull requests e passam por revisão do mantenedor.
 
 ## Apoiar
-O app será gratuito, com apoio voluntário. O Pix será disponibilizado após confirmação do mantenedor. O site ainda não recebe doações.
+O app será gratuito, com apoio voluntário. O site oficial oferece apoio voluntário por chave Pix aleatória informada pelo mantenedor. Confira sempre o beneficiário no aplicativo do banco. Não é preciso doar para usar o aplicativo ou participar.
 
 ## Licenças
 Código próprio sob MIT, conforme [LICENSE](LICENSE). Dependências e recursos têm suas próprias licenças: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Bibliotecas pessoais de demonstração não fazem parte da distribuição.

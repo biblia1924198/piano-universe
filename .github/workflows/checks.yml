@@ -15,3 +15,6 @@ jobs:
           node-version: '22'
       - run: python scripts/check_publication.py
       - run: node --check docs/site.js
+      - run: node --check docs/piano.js
+      - run: node tests/web/piano.cjs
+      - run: node tests/web/site.cjs

@@ -10,4 +10,4 @@ Restore the matching release asset archive with `python scripts/restore_assets.p
 
 Original code is MIT. Dependencies and bundled sounds retain their individual licences; see THIRD_PARTY_NOTICES.md and assets/legal. The full modified jFLAC source is included in src/org/jflac.
 
-Suggestions, device testing, translations and documentation are welcome. Read CONTRIBUTING.md before proposing changes. Donations are optional. The official repository is https://github.com/biblia1924198/piano-universe. Pix support will open after the maintainer confirms the payment details.
+Suggestions, device testing, translations and documentation are welcome. Read CONTRIBUTING.md before proposing changes. Donations are optional. The official repository is https://github.com/biblia1924198/piano-universe. Voluntary support via Pix is available on the official site. Always verify the recipient in your banking app.
